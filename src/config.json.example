@@ -1,0 +1,12 @@
+{
+    "token": "",
+    "messages": {
+        "embeds": {
+            "colors": {
+                "main": "31F8F8",
+                "success": "A8E593",
+                "error": "E33B17"
+            }
+        }
+    }
+}
