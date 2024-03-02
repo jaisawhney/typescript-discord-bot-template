@@ -1,16 +1,21 @@
-import { Client } from 'discord.js';
-import { registerEvents } from './utils/handler.js';
-import config from './config.json' assert { type: 'json' };
+import 'dotenv/config';
 
-const client = new Client({
-	intents: [
+import { Client, Collection } from 'discord.js';
+import { registerCommands, registerEvents } from './utils/handler.js';
+import { ClientInterface, CommandInterface } from './discord.types.js';
 
-	],
-	partials: [
 
-	],
-});
+const client: ClientInterface = Object.assign(
+    new Client({
+        intents: [],
+        partials: [],
+    }),
+    {
+        commands: new Collection<string, CommandInterface>(),
+    },
+);
 
+registerCommands(client);
 registerEvents(client);
 
-client.login(config.token);
+client.login(process.env.DISCORD_TOKEN);

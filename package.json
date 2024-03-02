@@ -1,18 +1,19 @@
 {
+  "private": true,
   "name": "discord-bot-template",
   "version": "1.0.0",
   "description": "",
   "type": "module",
   "scripts": {
     "start": "node dist/index.js",
+    "dev": "npx nodemon",
     "build": "tsc"
   },
   "author": "",
-  "license": "UNLICENSED",
   "dependencies": {
-    "axios": "^1.6.7",
     "chalk": "^5.3.0",
     "discord.js": "^14.14.1",
+    "dotenv": "^16.4.5",
     "sequelize": "^6.37.1",
     "sqlite3": "^5.1.7"
   },
