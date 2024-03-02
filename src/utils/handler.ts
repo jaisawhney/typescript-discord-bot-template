@@ -39,7 +39,7 @@ const registerCommands = async (client: ClientInterface) => {
         commands.push(command.builder.toJSON()!);
     }
 
-    if (process.env.DEPLOY_SLASH_COMMANDS! == 'true') {
+    if (process.env.DEPLOY_SLASH_COMMANDS!.toLowerCase() == 'true') {
         deployCommands(commands);
     }
 };
