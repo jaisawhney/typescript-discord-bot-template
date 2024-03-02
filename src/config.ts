@@ -1,4 +1,7 @@
 export default {
+    'activity': {
+        'message': 'Placeholder Activity',
+    },
     'messages': {
         'embeds': {
             'colors': {
