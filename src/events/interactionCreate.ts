@@ -1,5 +1,5 @@
 import { Events, BaseInteraction } from 'discord.js';
-import type { ClientInterface } from '../discord.types';
+import type { ClientInterface } from '../discord';
 
 const type = Events.InteractionCreate;
 const execute = async (interaction: BaseInteraction) => {

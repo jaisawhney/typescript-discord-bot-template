@@ -5,7 +5,7 @@ import { join, dirname } from 'node:path';
 import { readdirSync } from 'node:fs';
 
 import chalk from 'chalk';
-import type { ClientInterface } from '../discord.types';
+import type { ClientInterface } from '../discord';
 
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

@@ -2,7 +2,7 @@ import 'dotenv/config';
 
 import { Client, Collection } from 'discord.js';
 import { registerCommands, registerEvents } from './utils/handler.js';
-import { ClientInterface, CommandInterface } from './discord.types.js';
+import { ClientInterface, CommandInterface } from './discord';
 
 
 const client: ClientInterface = Object.assign(
