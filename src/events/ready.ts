@@ -1,4 +1,4 @@
-import { Events, type Client } from 'discord.js';
+import { Events, Client } from 'discord.js';
 import chalk from 'chalk';
 
 const type = Events.ClientReady;

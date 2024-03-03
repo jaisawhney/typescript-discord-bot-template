@@ -23,3 +23,5 @@ To deploy the slash commands set `DEPLOY_SLASH_COMMANDS` in `.env` to `true` and
 - Next, click the `bot` tab on the lefthand sidebar. Here you can change your bot's username and profile image
 - Under `Build-A-Bot` press `Reset Token` to get the token for your bot
 - Lastly, update your `.env` file with the client and and token from the above steps
+
+TODO: Write stuff about the database/prisma

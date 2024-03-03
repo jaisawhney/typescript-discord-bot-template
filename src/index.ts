@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-import { ActivityType, Client, Collection } from 'discord.js';
+import { ActivityType, Client, Collection, GatewayIntentBits } from 'discord.js';
 import { registerCommands, registerEvents } from './utils/handler.js';
 import { ClientInterface, CommandInterface } from './discord';
 import config from './config.js';
@@ -8,7 +8,10 @@ import config from './config.js';
 
 const client: ClientInterface = Object.assign(
     new Client({
-        intents: [],
+        intents: [
+            GatewayIntentBits.Guilds,
+            GatewayIntentBits.GuildMessages,
+        ],
         partials: [],
         presence: {
             activities: [{
