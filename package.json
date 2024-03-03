@@ -5,7 +5,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "lint": "npx eslint --fix src",
+    "lint": "npx eslint --cache --fix src",
     "start": "node dist/index.js",
     "dev": "npx nodemon",
     "build": "tsc && npx copyfiles -f example.env dist"
@@ -26,8 +26,5 @@
     "prisma": "^5.10.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
-  },
-  "prisma": {
-    "schema": "src/prisma/schema.prisma"
   }
 }
