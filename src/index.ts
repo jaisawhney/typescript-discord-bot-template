@@ -1,16 +1,16 @@
 import 'dotenv/config';
 
-import { ActivityType, Client, Collection, GatewayIntentBits } from 'discord.js';
-import { registerCommands, registerEvents } from './utils/handler.js';
-import { ClientInterface, CommandInterface } from './discord';
-import config from './config.js';
+import { ActivityType, Client, Collection, IntentsBitField } from 'discord.js';
+import { registerCommands, registerComponents, registerEvents } from './utils/handler.js';
+import { ClientInterface, CommandInterface, ComponentInterface } from './discord';
 
+import config from './config.js';
 
 const client: ClientInterface = Object.assign(
     new Client({
         intents: [
-            GatewayIntentBits.Guilds,
-            GatewayIntentBits.GuildMessages,
+            IntentsBitField.Flags.Guilds,
+            IntentsBitField.Flags.GuildMessages,
         ],
         partials: [],
         presence: {
@@ -22,10 +22,13 @@ const client: ClientInterface = Object.assign(
     }),
     {
         commands: new Collection<string, CommandInterface>(),
+        subCommands: new Collection<string, CommandInterface>(),
+        components: new Collection<string, ComponentInterface>(),
     },
 );
 
 registerCommands(client);
 registerEvents(client);
+registerComponents(client);
 
 client.login(process.env.DISCORD_TOKEN);

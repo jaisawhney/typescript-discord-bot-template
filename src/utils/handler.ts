@@ -2,7 +2,7 @@ import { REST, Routes } from 'discord.js';
 
 import { fileURLToPath } from 'node:url';
 import { join, dirname } from 'node:path';
-import { readdirSync } from 'node:fs';
+import { readdirSync, lstatSync } from 'node:fs';
 
 import chalk from 'chalk';
 import type { ClientInterface } from '../discord';
@@ -13,11 +13,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const registerEvents = async (client: ClientInterface) => {
     const eventsPath = join(__dirname, '../events');
     const files = readdirSync(eventsPath)
-        .filter(file => file.endsWith('js') || file.endsWith('ts'));
+        .filter(file => file.endsWith('js') || file.endsWith('ts') && lstatSync(`${eventsPath}/${file}`).isFile());
 
     for (const file of files) {
         const event = (await import(`../events/${file}`));
-
         if (event.once) {
             client.once(event.type, (...args) => event.execute(...args));
         } else {
@@ -44,14 +43,25 @@ const registerCommands = async (client: ClientInterface) => {
     }
 };
 
+const registerComponents = async (client: ClientInterface) => {
+    const componentsPath = join(__dirname, '../events/components');
+    const files = readdirSync(componentsPath)
+        .filter(file => file.endsWith('js') || file.endsWith('ts'));
+
+    for (const file of files) {
+        const component = (await import(`../events/components/${file}`));
+        client.components.set(component.id, component);
+    }
+};
+
 const rest = new REST().setToken(process.env.DISCORD_TOKEN!);
 const deployCommands = async (commands: object[]) => {
     console.log('Deploying commands');
     const data = await rest.put(
-        Routes.applicationCommands(process.env.CLIENT_ID!),
+        Routes.applicationCommands(process.env.DISCORD_CLIENT_ID!),
         { body: commands },
     ) as [];
     console.log(chalk.green(`Deployed ${data.length} commands!`));
 };
 
-export { registerEvents, registerCommands };
+export { registerEvents, registerComponents, registerCommands };

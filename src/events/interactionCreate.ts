@@ -10,11 +10,18 @@ const execute = async (interaction: BaseInteraction) => {
 
             if (!command) return;
             command.execute(interaction);
+        } else if (interaction.isButton()) {
+            const client = interaction.client as ClientInterface;
+            const buttonComponent = client.components.get(interaction.customId);
+
+            if (!buttonComponent) return;
+            buttonComponent.execute(interaction);
         }
     } catch (err) {
         if (interaction.isRepliable()) {
             interaction.reply({ content: 'Error while executing interaction!', ephemeral: true });
         }
+        console.error(err);
     }
 };
 

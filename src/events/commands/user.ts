@@ -1,8 +1,8 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction, resolveColor, ColorResolvable } from 'discord.js';
-import { Prisma } from '@prisma/client';
+import { SlashCommandBuilder, ChatInputCommandInteraction, resolveColor, ColorResolvable, MessageFlags } from 'discord.js';
 
 import config from '../../config.js';
-import prisma from '../../lib/prisma.js';
+import { db, schema } from '../../db/index.js';
+import { eq } from 'drizzle-orm';
 
 const builder = new SlashCommandBuilder()
     .setName('user')
@@ -17,12 +17,9 @@ const execute = async (interaction: ChatInputCommandInteraction) => {
     try {
         const user = interaction.options.getUser('user')!;
         const guildMember = await interaction.guild!.members.fetch(user.id)!;
-        const userData = await prisma.user.findUnique({
-            where: {
-                id: user!.id,
-            },
+        const userData = await db.query.users.findFirst({
+            where: eq(schema.users.id, user!.id),
         });
-
         interaction.reply({
             embeds: [
                 {
@@ -49,14 +46,11 @@ const execute = async (interaction: ChatInputCommandInteraction) => {
                     },
                 },
             ],
-            ephemeral: true,
-        });
+            flags: [
+                MessageFlags.Ephemeral
+            ],
+        },);
     } catch (err) {
-        if (err instanceof Prisma.PrismaClientKnownRequestError) {
-            // https://www.prisma.io/docs/orm/reference/error-reference#error-codes
-            // ...
-        }
-
         console.error(err);
         interaction.reply({
             embeds: [

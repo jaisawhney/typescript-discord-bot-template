@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction, resolveColor, ColorResolvable } from 'discord.js';
+import { SlashCommandBuilder, ChatInputCommandInteraction, resolveColor, ColorResolvable, MessageFlags } from 'discord.js';
 import config from '../../config.js';
 
 const builder = new SlashCommandBuilder()
@@ -13,7 +13,9 @@ const execute = async (interaction: ChatInputCommandInteraction) => {
                 color: resolveColor(config.messages.embeds.colors.main as ColorResolvable),
             },
         ],
-        ephemeral: true,
+        flags: [
+            MessageFlags.Ephemeral
+        ],
     });
 };
 
